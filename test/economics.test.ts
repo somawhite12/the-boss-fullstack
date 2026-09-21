@@ -1,0 +1,2 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {normalFeeBreakdown} from '../src/shared/economics.js';
+test('current Pons + THE BOSS fee split is 0.30 / 3.76 / 0.94 percent',()=>{const x=normalFeeBreakdown(100,400,3000,8000);assert.deepEqual(x,{normalTotalBps:500,protocolVolumeBps:30,creatorBaseVolumeBps:70,routerVolumeBps:470,chestVolumeBps:376,projectVolumeBps:94});});

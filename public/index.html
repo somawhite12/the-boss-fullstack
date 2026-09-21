@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#f6f6f0" />
+  <title>THE BOSS — KILL THE BOSS ($KBOSS)</title>
+  <meta name="description" content="Buy to deal damage. Sell to heal the boss. Land the final blow and win the chest." />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="site-shell">
+    <main class="arena">
+      <header class="topbar">
+        <a class="wordmark" href="/">THE BOSS</a>
+        <div class="top-actions">
+          <div class="network-pill"><span class="live-dot"></span><span id="networkText">ROBINHOOD CHAIN</span></div>
+          <button class="ghost-btn" id="verifyBtn">VERIFY</button>
+          <a class="solid-btn hidden" id="tradeBtn" target="_blank" rel="noreferrer">TRADE KBOSS</a>
+          <button class="solid-btn" id="walletBtn">CONNECT</button>
+        </div>
+      </header>
+
+      <section class="boss-stage">
+        <div class="eyebrow-row">
+          <span id="bossIndex">BOSS #1</span>
+          <span class="status-separator"></span>
+          <span id="lifecycle">PRE-LAUNCH</span>
+        </div>
+        <h1>THE BOSS</h1>
+        <p class="tagline">BUY = DAMAGE&nbsp;&nbsp;·&nbsp;&nbsp;SELL = HEALING</p>
+
+        <div class="hp-wrap">
+          <div class="hp-copy">
+            <span>HP</span>
+            <strong id="hpText">2,000,000 / 2,000,000</strong>
+          </div>
+          <div class="hp-track"><div class="hp-fill" id="hpFill"></div></div>
+          <div class="hp-subcopy"><span id="hpPct">100.0%</span><span>CONFIRMED ON-CHAIN</span></div>
+        </div>
+
+        <div class="boss-visual-wrap">
+          <div class="impact" id="impact"></div>
+          <img id="bossVisual" class="boss-visual" src="/boss.png" alt="The Boss" />
+        </div>
+
+        <div class="chest-row">
+          <div class="chest-card primary">
+            <span>SETTLED CHEST</span>
+            <strong id="potText">0.000000 ETH</strong>
+            <small>Only ETH already inside the Treasury can be won.</small>
+          </div>
+          <div class="chest-card secondary">
+            <span>PENDING ROUTING</span>
+            <strong id="pendingText">0.000000 ETH</strong>
+            <small>Not part of the prize until settled on-chain.</small>
+          </div>
+        </div>
+
+        <div class="mechanic-strip">
+          <div><b>BUY</b><span>deals damage</span></div>
+          <i></i>
+          <div><b>SELL</b><span>heals the boss</span></div>
+          <i></i>
+          <div><b>FINAL BLOW</b><span>wins the settled chest</span></div>
+        </div>
+
+        <div class="claim-panel hidden" id="claimPanel">
+          <div><span>CLAIMABLE</span><strong id="claimableText">0 ETH</strong></div>
+          <button class="solid-btn" id="claimBtn">CLAIM PRIZE</button>
+        </div>
+      </section>
+    </main>
+
+    <aside class="raid-panel">
+      <div class="raid-head">
+        <div><span class="micro">LIVE RAID</span><h2>Activity</h2></div>
+        <span class="socket-status" id="socketStatus">CONNECTING</span>
+      </div>
+      <div class="raid-stats">
+        <div><span>TRADES</span><strong id="tradeCount">0</strong></div>
+        <div><span>DEFEATED</span><strong id="defeatedCount">0</strong></div>
+      </div>
+      <div class="feed" id="feed"><div class="empty-feed">Waiting for the raid to begin.</div></div>
+      <div class="panel-foot">
+        <div class="demo-box hidden" id="demoBox">
+          <span class="micro">DEMO CONTROLS</span>
+          <div class="demo-input"><input id="demoEth" type="number" min="0.001" step="0.01" value="0.10"><span>ETH</span></div>
+          <div class="demo-buttons"><button id="demoBuy">BUY / DAMAGE</button><button id="demoSell">SELL / HEAL</button></div>
+        </div>
+        <p>Game state is verified against <a id="treasuryLink" target="_blank" rel="noreferrer">BossGameTreasury</a>.</p>
+      </div>
+    </aside>
+  </div>
+
+  <dialog class="verify-dialog" id="verifyDialog">
+    <div class="verify-shell">
+      <header class="verify-top">
+        <div><span class="micro">ON-CHAIN TRANSPARENCY</span><h2>DON'T TRUST THE WEBSITE.<br>VERIFY THE CONTRACTS.</h2></div>
+        <button class="ghost-btn" id="closeVerify">CLOSE</button>
+      </header>
+
+      <section class="verify-summary">
+        <div class="verify-big"><span>NORMAL TRADING FEE</span><strong id="totalFee">5.00%</strong><small>Separate from Pons' opening anti-snipe tax.</small></div>
+        <div class="verify-copy">The website is not the authority over HP, the winner, or the prize. Reporter batches update the Treasury contract. The winner claims directly from the contract.</div>
+      </section>
+
+      <section>
+        <div class="section-label">WHERE A NORMAL TRADE FEE GOES</div>
+        <div class="fee-grid">
+          <div class="fee-card"><span>TRADER PAYS</span><strong id="feeTrader">5.00%</strong><small>1% Pons base + 4% creator tax</small></div>
+          <div class="arrow">→</div>
+          <div class="fee-card dark"><span>PONS PROTOCOL</span><strong id="feeProtocol">0.30%</strong><small>30% of the 1% base fee</small></div>
+          <div class="arrow">+</div>
+          <div class="fee-card router"><span>BOSS FEE ROUTER</span><strong id="feeRouterShare">4.70%</strong><small>creator share of base fee + 4% creator tax</small></div>
+        </div>
+        <div class="split-grid">
+          <div><span>80% OF ROUTER REVENUE</span><strong id="feeChest">3.76%</strong><small>of normal trade volume → chest</small></div>
+          <div><span>20% OF ROUTER REVENUE</span><strong id="feeProject">0.94%</strong><small>of normal trade volume → project</small></div>
+        </div>
+        <p class="note">Opening anti-snipe tax: <b id="snipeTax">99%</b> at launch, decaying over <b id="snipeSecs">3 seconds</b>. This is not part of the normal 5% fee above.</p>
+      </section>
+
+      <section>
+        <div class="section-label">CONTRACTS</div>
+        <div class="address-grid" id="addressGrid"></div>
+      </section>
+
+      <section>
+        <div class="section-label">GAME RULES</div>
+        <div class="rules-grid">
+          <div><b>BUY</b><strong>1 ETH = 1,000,000 DAMAGE</strong><p>Damage is based on the canonical ETH quote amount, not token amount.</p></div>
+          <div><b>SELL</b><strong>1 ETH = 1,000,000 HEALING</strong><p>Healing is capped at the active Boss' maximum HP.</p></div>
+          <div><b>WINNER</b><strong>THE FINAL VALID BUY</strong><p>The wallet that takes HP from above zero to zero gets the settled chest reserved on-chain.</p></div>
+          <div><b>REPORTERS</b><strong>2 OF 3 SIGNATURES</strong><p>Trades are ordered by block, transaction index, and log index. The contract enforces confirmation lag.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-label">SECURITY STATUS</div>
+        <div class="status-grid">
+          <div><span>DEPLOYMENT WIRING</span><strong id="deploymentStatus">CHECKING</strong></div>
+          <div><span>REPORTING</span><strong id="reportingStatus">CHECKING</strong></div>
+          <div><span>CREATOR RECIPIENT OVERRIDE</span><strong id="overrideStatus">N/A PRE-LAUNCH</strong></div>
+          <div><span>BUYBACK</span><strong id="buybackStatus">DISABLED</strong></div>
+        </div>
+      </section>
+
+      <footer class="verify-footer">KILL THE BOSS · KBOSS · ROBINHOOD CHAIN 4663</footer>
+    </div>
+  </dialog>
+
+  <script src="/app.js" defer></script>
+</body>
+</html>
